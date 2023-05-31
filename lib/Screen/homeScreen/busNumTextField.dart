@@ -11,6 +11,13 @@ class BusNumTextField extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        Text(
+          '알림을 받을 버스를 검색하세요',
+          style: TextStyle(fontSize: 20, color: Colors.black87),
+        ),
+        SizedBox(
+          height: 50,
+        ),
         Container(
           width: 200,
           child: TextField(
