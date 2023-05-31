@@ -1,4 +1,4 @@
-import 'package:busking/myAppBar.dart';
+import 'package:busking/mainAppBar.dart';
 import 'package:busking/src/BusRouteCard.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,22 +7,23 @@ import 'package:busking/model/BusRoute.dart';
 
 //ignore_for_file: prefer_const_constructors
 
+/* 전역변수 */
+String departureStation = ''; // 출발 정류장
+String arrivalStation = ''; // 도착 정류장
+
 class SelectionStationPage extends StatefulWidget {
   final String routeId;
-
   const SelectionStationPage({Key? key, required this.routeId}) : super(key: key);
-
   @override
   State<SelectionStationPage> createState() => _SelectionStationPageState();
 }
 
 class _SelectionStationPageState extends State<SelectionStationPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StationPageAppBar(),
-      backgroundColor: Colors.white, // 배경을 흰색으로 지정
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: BusRoute.callStationList(widget.routeId),
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
@@ -59,8 +60,6 @@ class _SelectionStationPageState extends State<SelectionStationPage> {
 }
 
 class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String departureStation = ''; // 출발 정류장
-  String arrivalStation = ''; // 도착 정류장
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +68,15 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
         onPressed: () {
+          //뒤로 가기 누를 시 선택 정류장 값 초기화
+          departureStation = '';
+          arrivalStation = '';
           Navigator.of(context).pop();
         },
       ),
-      toolbarHeight: 100, // 원하는 높이로 설정
+      toolbarHeight: 100,
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             child: Column(
@@ -87,7 +90,7 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                       height: 50,
                       child: Text(
                         '출발 정류장',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                     SizedBox(
@@ -96,14 +99,14 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Container(
                         alignment: Alignment.center,
                         height: 35,
-                        width: 200,
+                        width: 120,
                         decoration: BoxDecoration(
                           color: Color(0xFFf6f6f6),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
                           departureStation,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 13),
                         ),
                       ),
                   ],
@@ -116,7 +119,7 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                       height: 50,
                       child: Text(
                         '도착 정류장',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                     SizedBox(
@@ -125,14 +128,14 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Container(
                       alignment: Alignment.center,
                       height: 35,
-                      width: 200,
+                      width: 120,
                       decoration: BoxDecoration(
                         color: Color(0xFFf6f6f6),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         arrivalStation,
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                   ],
@@ -140,22 +143,18 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
           ),
-
-          /*
           ElevatedButton(
-            //style: ButtonStyle(minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),),
-            onPressed: () {
-              // 버튼 클릭 시 실행될 동작
-            },
-            child: Text('알림 설정하기'),
+            onPressed: departureStation.isNotEmpty && arrivalStation.isNotEmpty ? () {
+              // departureStation과 arrivalStation 변수에 값이 할당되어 있을 때만 최종 알림설정 버튼이 활성화되도록 설정
+            } : null,
+            child: Text('설정', style: TextStyle(fontSize: 13),),
           )
-           */
         ],
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(100); // AppBar의 높이 설정
+  Size get preferredSize => Size.fromHeight(100); // 정류장 리스트 AppBar의 높이 설정
 }
 

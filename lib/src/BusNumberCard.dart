@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:busking/Screen/SelectionStationPage.dart';
+import 'package:busking/Screen/homeScreen/selectionStationPage/selectionStationPage.dart';
 
 class BusNumberCard extends StatefulWidget {
   final List<String> busList;
@@ -22,7 +22,7 @@ class _BusNumberCardState extends State<BusNumberCard> {
         child: ListTile(
           title: Text(widget.busList[widget.index],
           style: TextStyle(
-            fontSize: 30
+            fontSize: 20
           ),
           ),
           onTap: () {

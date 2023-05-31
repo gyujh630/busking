@@ -11,7 +11,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: InkWell(  //앱바 우측 설정 버튼
+      leading: InkWell(
+        /*
         onTap: () {
           Navigator.push(
             context,
@@ -23,6 +24,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           );
         },
+         */
         child: Padding(  //앱바 좌측 아이콘
           padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
           child: Image.asset(
