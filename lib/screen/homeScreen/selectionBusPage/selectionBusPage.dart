@@ -1,6 +1,6 @@
-import 'package:busking/src/BusNumberCard.dart';
+import 'package:busking/src/busNumberCard.dart';
 import 'package:flutter/material.dart';
-import 'package:busking/src/MyScrollBehavior.dart';
+import 'package:busking/src/myScrollBehavior.dart';
 
 class SelectionBusPage extends StatefulWidget {
   final List<String> busList;

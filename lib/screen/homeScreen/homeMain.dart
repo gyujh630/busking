@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:busking/model/BusRoute.dart';
+import 'package:busking/model/busRoute.dart';
 import 'package:busking/Screen/homeScreen/selectionBusPage/selectionBusPage.dart';
 //ignore_for_file: prefer_const_constructors
 

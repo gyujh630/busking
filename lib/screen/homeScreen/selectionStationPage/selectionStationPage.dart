@@ -1,8 +1,8 @@
-import 'package:busking/src/BusRouteCard.dart';
-import 'package:busking/src/MyScrollBehavior.dart';
+import 'package:busking/src/busRouteCard.dart';
+import 'package:busking/src/myScrollBehavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:busking/model/BusRoute.dart';
+import 'package:busking/model/busRoute.dart';
 import 'package:provider/provider.dart';
 import '/provider/stationDataProvider.dart';
 //ignore_for_file: prefer_const_constructors
