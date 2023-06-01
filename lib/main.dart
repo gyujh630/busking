@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-import 'package:busking/JsonDecode.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'APIUrl.dart';
 
 import 'package:provider/provider.dart';
 import 'provider/bottomNavigationBarProvider.dart';
@@ -54,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: MyAppBar(),
       body: screens[_provider.currentIdx],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(   //하단바
         currentIndex: _provider.currentIdx,
         onTap: (index){
           _provider.currentIdx = index;

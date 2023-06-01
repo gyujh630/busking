@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/model/busRoute.dart';
 import 'package:provider/provider.dart';
+import '/provider/busSetProvider.dart';
 import '/provider/stationDataProvider.dart';
+import 'package:busking/main.dart';
 //ignore_for_file: prefer_const_constructors
 
 
@@ -16,14 +18,16 @@ class SelectionStationPage extends StatefulWidget {
   @override
   State<SelectionStationPage> createState() => _SelectionStationPageState();
 }
-
 class _SelectionStationPageState extends State<SelectionStationPage> {
   final StationData stationData = StationData(); // StationData 인스턴스 생성
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<StationData>(
-      create: (context) => stationData, // StationData 인스턴스를 Provider로 제공
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<StationData>.value(value: stationData), // StationData 인스턴스를 Provider로 제공
+        ChangeNotifierProvider<BusSetProvider>(create: (_) => BusSetProvider()), // BusSetProvider 인스턴스를 Provider로 제공
+      ],
       child: Scaffold(
         appBar: StationPageAppBar(),
         backgroundColor: Colors.white,
@@ -68,17 +72,20 @@ class _SelectionStationPageState extends State<SelectionStationPage> {
 }
 
 
+
+// 정류장 선택 페이지의 상단바 부분
+
 class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
+    final busSetProvider = Provider.of<BusSetProvider>(context, listen: false);
     return AppBar(
       backgroundColor: Colors.white,
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
         onPressed: () {
           var stationData = Provider.of<StationData>(context, listen: false);
-          stationData.updateDepartureStation(''); // 뒤로 가기 시, 출발 정류장 초기화
-          stationData.updateArrivalStation(''); // 뒤로 가기 시, 도착 정류장 초기화
+          stationData.resetStations(); // 뒤로 가기 시, 선택된 정류장 리셋
           Navigator.of(context).pop();
         },
       ),
@@ -156,7 +163,12 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
               ElevatedButton(
                 onPressed: stationData.departureStation.isNotEmpty && stationData.arrivalStation.isNotEmpty
                     ? () {
-                  // departureStation과 arrivalStation 변수에 값이 할당되어 있을 때만 최종 알림설정 버튼이 활성화되도록 설정
+                  busSetProvider.isBusSet = true;
+                  print(busSetProvider.isBusSet);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
                 }
                     : null,
                 child: Text(
@@ -164,6 +176,7 @@ class StationPageAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(fontSize: 13),
                 ),
               )
+
             ],
           );
         },

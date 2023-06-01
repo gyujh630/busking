@@ -2,6 +2,8 @@ import 'package:busking/src/busNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/myScrollBehavior.dart';
 
+//정류장 선택 페이지
+
 class SelectionBusPage extends StatefulWidget {
   final List<String> busList;
   final List<String> routeIdList;
@@ -16,9 +18,9 @@ class _SelectionBusPageState extends State<SelectionBusPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, //배경색
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white, //Appbar 배경색
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {

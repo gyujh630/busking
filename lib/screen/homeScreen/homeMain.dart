@@ -1,92 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:busking/model/busRoute.dart';
-import 'package:busking/Screen/homeScreen/selectionBusPage/selectionBusPage.dart';
+import '/provider/busSetprovider.dart';
+import '/provider/stationDataProvider.dart';
+import 'homeBeforeSetBus.dart';
+import 'homeAfterSetBus.dart';
+import 'selectionStationPage/selectionStationPage.dart';
 //ignore_for_file: prefer_const_constructors
 
-
 /*
- Home - MultiProvider로 state 관리 구현 필요
+ home 메인 부분
 */
 
 class homeMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BusSearchScreen()
+    return ChangeNotifierProvider.value(
+      value: BusSetProvider(),
+      child: Consumer<BusSetProvider>(
+        builder: (context, busSetProvider, _) {
+          final isBusSet = busSetProvider.isBusSet;
+          return Scaffold(
+            body: isBusSet ? homeAfterSetBus() : homeBeforeSetBus(),
+          );
+        },
+      ),
     );
   }
 }
 
-
-
-class BusSearchScreen extends StatelessWidget {
+/* isBusSet 테스트용
+class homeMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: BusNumTextField(),
+    return ChangeNotifierProvider.value(
+      value: BusSetProvider(),
+      child: Consumer<BusSetProvider>(
+        builder: (context, busSetProvider, _) {
+          final isBusSet = busSetProvider.isBusSet;
+          print('isBusSet: $isBusSet'); // 테스트용 print 문
+          return Scaffold(
+            body: isBusSet ? homeAfterSetBus() : homeBeforeSetBus(),
+          );
+        },
+      ),
     );
   }
 }
 
-class BusNumTextField extends StatelessWidget {
-  final _editController = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          '알림 받을 버스를 검색하세요!',
-          style: TextStyle(fontSize: 20, color: Colors.black87),
-        ),
-        SizedBox(
-          height: 50,
-        ),
-        Container(
-          width: 200,
-          child: TextField(
-            controller: _editController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "버스 번호 입력",
-            ),
-          ),
-        ),
-        TextButton(
-          onPressed: () async {
-            final busList = await BusRoute.callBusList(_editController.text);
-            final routeIdList = await BusRoute.callRouteIdList(_editController.text);
-            print(busList.isEmpty);
-            if (busList.isEmpty) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Text('해당 버스 번호가 존재하지 않습니다.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('확인'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => SelectionBusPage(busList: busList, routeIdList: routeIdList),
-                ),
-              );
-            }
-          },
-          child: Text('검색'),
-        )
-
-      ],
-    );
-  }
-}
+ */

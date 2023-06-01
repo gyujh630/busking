@@ -12,7 +12,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: InkWell(
-        /*
+        /* 앱바 좌측 아이콘 부분
         onTap: () {
           Navigator.push(
             context,
@@ -25,7 +25,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           );
         },
          */
-        child: Padding(  //앱바 좌측 아이콘
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 8, 8, 8),
           child: Image.asset(
             'assets/images/crown.png',
@@ -33,9 +33,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      actions: [
+      actions: [ //앱바 우측 설정 아이콘 부분
         Padding(
-          padding: const EdgeInsets.only(right: 8.0), // 오른쪽 패딩 조절
+          padding: const EdgeInsets.only(right: 8.0),
           child: IconButton(
             icon: const Icon(Icons.settings),
             color: Colors.black54,
@@ -49,7 +49,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      titleSpacing: 0, // 패딩 값
+      titleSpacing: 0,
     );
 
   }
